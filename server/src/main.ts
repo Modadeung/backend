@@ -6,6 +6,8 @@ import { SwaggerService } from './setting';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.setGlobalPrefix('api');
+
   const swaggerService = app.get(SwaggerService);
   swaggerService.createSwaggerDocument(app);
 

@@ -21,6 +21,6 @@ export class SwaggerService {
     };
 
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('swagger', app, document, swaggerCustomOptions);
+    SwaggerModule.setup('api/swagger', app, document, swaggerCustomOptions);
   }
 }
