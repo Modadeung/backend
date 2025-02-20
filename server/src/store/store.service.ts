@@ -78,35 +78,24 @@ export class StoreService {
   }
 
   async getStoreDetail(storeId: string) {
-    const store = await this.entityManager.findOne(StoreEntity, {
-      where: {
-        id: storeId,
-      },
-      relations: {
-        keywordList: true,
-        storeImageList: true,
-      },
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        minPrice: true,
-        maxPrice: true,
-        scope: true,
-        review: true,
-        keywordList: {
-          name: true,
-        },
-        storeImageList: {
-          imageUrl: true,
-        },
-      },
+    const store = await this.entityManager.findOneBy(StoreEntity, {
+      id: storeId,
     });
+
+    if (!store) return null;
+
+    const storeWithDetails = await this.entityManager
+      .createQueryBuilder(StoreEntity, 'store')
+      .leftJoinAndSelect('store.keywordList', 'keyword')
+      .leftJoinAndSelect('store.storeImageList', 'image')
+      .where('store.id = :storeId', { storeId })
+      .getOne();
 
     return {
       ...store,
-      keywordList: store?.keywordList?.map((kw) => kw.name) || [],
-      storeImageList: store?.storeImageList?.map((img) => img.imageUrl) || [],
+      keywordList: storeWithDetails?.keywordList?.map((kw) => kw.name) || [],
+      storeImageList:
+        storeWithDetails?.storeImageList?.map((img) => img.imageUrl) || [],
     };
   }
 
