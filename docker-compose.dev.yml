@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  db-postgres:
+    container_name: db-postgres
+    image: postgres:15
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    environment:
+      - POSTGRES_USER=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DATABASE}
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    networks:
+      - network-backend
+
+networks:
+  network-backend:
+    driver: bridge
+    name: network-backend
