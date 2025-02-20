@@ -26,10 +26,9 @@ export class StoreService {
   async getStoreList(keywordList: string[]) {
     return await this.entityManager
       .createQueryBuilder(StoreEntity, 'store')
-      .leftJoinAndSelect('store.keywordList', 'storeKeyWord')
+      .leftJoin('store.keywordList', 'storeKeyWord')
       .where('storeKeyWord.name IN (:...keywordList)', { keywordList })
       .groupBy('store.id')
-      .addGroupBy('storeKeyWord.id')
       .having('COUNT(storeKeyWord.id) >= 2')
       .select([
         'store.id',
@@ -40,9 +39,8 @@ export class StoreService {
         'store.maxPrice',
         'store.scope',
         'store.review',
-        'storeKeyWord.name',
-        'storeKeyWord.id',
+        'ARRAY_AGG(storeKeyWord.name) AS keywords',
       ])
-      .getMany();
+      .getRawMany();
   }
 }

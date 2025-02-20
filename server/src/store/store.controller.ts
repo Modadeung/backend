@@ -18,7 +18,6 @@ export class StoreController {
   @ApiOperation({ summary: '상점 리스트' })
   @Get('list')
   async getStoreList(@Query() dto: GetStoreDto) {
-    console.log(dto.keywordList);
     return await this.storeService.getStoreList(dto.keywordList);
   }
 }

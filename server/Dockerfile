@@ -1,5 +1,5 @@
 
-FROM node:18.12.1-alpine AS deps
+FROM krmp-d2hub-idock.9rum.cc/goorm/node:18 AS deps
 
 WORKDIR /usr/src/modadug/app
 
@@ -15,7 +15,7 @@ COPY . .
 RUN yarn build
 
 
-FROM node:18.12.1-alpine AS runner
+FROM krmp-d2hub-idock.9rum.cc/goorm/node:18 AS runner
 
 
 WORKDIR /usr/src/modadug/app
@@ -25,4 +25,6 @@ COPY --from=deps /usr/src/modadug/app/dist ./dist
 COPY --from=deps /usr/src/modadug/app/src/envs ./src/envs
 COPY --from=deps /usr/src/modadug/app/node_modules ./node_modules
 
+EXPOSE 8080
 CMD ["node", "dist/main"]
+
