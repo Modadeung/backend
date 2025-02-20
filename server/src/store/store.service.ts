@@ -59,8 +59,8 @@ export class StoreService {
         'store.maxPrice AS store_max_price',
         'store.scope AS store_scope',
         'store.review AS store_review',
-        'JSON_ARRAY(GROUP_CONCAT(DISTINCT storeImage.imageUrl)) AS imageUrls',
-        'JSON_ARRAY(GROUP_CONCAT(DISTINCT storeKeyWord.name)) AS keywords',
+        "CONCAT('[', GROUP_CONCAT(DISTINCT JSON_QUOTE(storeImage.imageUrl)), ']') AS imageUrls",
+        "CONCAT('[', GROUP_CONCAT(DISTINCT JSON_QUOTE(storeKeyWord.name)), ']') AS keywords",
       ])
       .getRawMany();
 
@@ -72,8 +72,8 @@ export class StoreService {
       store_max_price: store.store_max_price,
       store_scope: store.store_scope,
       store_review: store.store_review,
-      imageUrlList: JSON.parse(store.imageUrls),
-      keywordList: JSON.parse(store.keywords),
+      imageUrlList: JSON.parse(store.imageUrls), // 이제 JSON으로 변환 가능!
+      keywordList: JSON.parse(store.keywords), // 이제 JSON으로 변환 가능!
     }));
   }
 
