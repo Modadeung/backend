@@ -43,34 +43,6 @@ export class StoreService {
     });
   }
 
-  // async getStoreList(keywordList: string[]) {
-  //   const stores = await this.entityManager
-  //     .createQueryBuilder(StoreEntity, 'store')
-  //     .leftJoin('store.keywordList', 'storeKeyWord')
-  //     .leftJoin('store.storeImageList', 'storeImage')
-  //     .where('storeKeyWord.name IN (:...keywordList)', { keywordList })
-  //     .groupBy('store.id')
-  //     .having('COUNT(storeKeyWord.id) >= 2')
-  //     .select([
-  //       'store.id',
-  //       'store.name',
-  //       'store.description',
-  //       'store.minPrice',
-  //       'store.maxPrice',
-  //       'store.scope',
-  //       'store.review',
-  //       'JSON_ARRAYAGG(storeImage.imageUrl) AS imageUrls',
-  //       'JSON_ARRAYAGG(storeKeyWord.name) AS keywords',
-  //     ])
-  //     .getRawMany();
-
-  //   return stores.map((store) => ({
-  //     ...store,
-  //     imageUrlList: JSON.parse(store.imageUrls),
-  //     keywordList: JSON.parse(store.keywords),
-  //   }));
-  // }
-
   async getStoreList(keywordList: string[]) {
     const stores = await this.entityManager
       .createQueryBuilder(StoreEntity, 'store')
@@ -78,17 +50,17 @@ export class StoreService {
       .leftJoin('store.storeImageList', 'storeImage')
       .where('storeKeyWord.name IN (:...keywordList)', { keywordList })
       .groupBy('store.id')
-      .having('COUNT(storeKeyWord.id) >= 2')
+      .having('COUNT(DISTINCT storeKeyWord.id) >= 2')
       .select([
-        'store.id',
-        'store.name',
-        'store.description',
-        'store.minPrice',
-        'store.maxPrice',
-        'store.scope',
-        'store.review',
-        'JSON_ARRAYAGG(storeImage.imageUrl) AS imageUrls',
-        'JSON_ARRAYAGG(storeKeyWord.name) AS keywords',
+        'store.id AS store_id',
+        'store.name AS store_name',
+        'store.description AS store_description',
+        'store.minPrice AS store_min_price',
+        'store.maxPrice AS store_max_price',
+        'store.scope AS store_scope',
+        'store.review AS store_review',
+        'JSON_ARRAY(GROUP_CONCAT(DISTINCT storeImage.imageUrl)) AS imageUrls',
+        'JSON_ARRAY(GROUP_CONCAT(DISTINCT storeKeyWord.name)) AS keywords',
       ])
       .getRawMany();
 
@@ -100,8 +72,8 @@ export class StoreService {
       store_max_price: store.store_max_price,
       store_scope: store.store_scope,
       store_review: store.store_review,
-      imageUrlList: JSON.parse(store.imageUrls), // Only return imageUrlList
-      keywordList: JSON.parse(store.keywords), // Only return keywordList
+      imageUrlList: JSON.parse(store.imageUrls),
+      keywordList: JSON.parse(store.keywords),
     }));
   }
 
