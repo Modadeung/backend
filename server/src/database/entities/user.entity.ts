@@ -4,7 +4,7 @@ import { IsUUID } from 'class-validator';
 import { UserStoreEntity } from './user-store-list.entity';
 import { UserKeyWordEntity } from './user-key-word-list.entity';
 
-@Entity({ name: 'user' })
+@Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @IsUUID()

@@ -17,10 +17,10 @@ export class CreateStoreDto {
 
   /**
    * 상점 이미지
-   * @example 'https://store-image-url.com
+   * @example ['https://store-image-url.com']
    */
   @IsString()
-  imageUrl: string;
+  imageUrl: string[];
 
   /**
    * 별점

@@ -10,17 +10,16 @@ configDotenv({
 const config: ConfigSchema = configuration();
 
 export const dataSourceOption: DataSourceOptions = {
-  type: 'postgres',
-  host: config.postgresHost,
-  port: config.postgresPort,
-  username: config.postgresUserName,
-  password: config.postgresPassword,
-  database: config.postgresDatabaseName,
+  type: 'mysql',
+  host: config.mysqlHost,
+  port: config.mysqlPort,
+  username: config.mysqlUserName,
+  password: config.mysqlPassword,
+  database: config.mysqlDatabaseName,
   dropSchema: false,
   synchronize: false,
   entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
   migrations: [__dirname + '/../migrations/**/*{.ts,.js}'],
   migrationsTableName: 'migrations',
 };
-
 export const dataSource = new DataSource(dataSourceOption);

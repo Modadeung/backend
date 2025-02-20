@@ -3,21 +3,21 @@ import { ConfigSchema } from './types';
 
 export default () => {
   const schema = Joi.object<ConfigSchema, true>({
-    postgresHost: Joi.string().required(),
-    postgresPort: Joi.number().required(),
-    postgresUserName: Joi.string().required(),
-    postgresPassword: Joi.string().required(),
-    postgresDatabaseName: Joi.string().required(),
+    mysqlHost: Joi.string().required(),
+    mysqlPort: Joi.number().required(),
+    mysqlUserName: Joi.string().required(),
+    mysqlPassword: Joi.string().required(),
+    mysqlDatabaseName: Joi.string().required(),
 
     slackBotOauthToken: Joi.string().required(),
   });
 
   const config = {
-    postgresHost: process.env.POSTGRES_HOST,
-    postgresPort: process.env.POSTGRES_PORT,
-    postgresUserName: process.env.POSTGRES_USERNAME,
-    postgresPassword: process.env.POSTGRES_PASSWORD,
-    postgresDatabaseName: process.env.POSTGRES_DATABASE,
+    mysqlHost: process.env.MYSQL_HOST,
+    mysqlPort: process.env.MYSQL_PORT,
+    mysqlUserName: process.env.MYSQL_USERNAME,
+    mysqlPassword: process.env.MYSQL_PASSWORD,
+    mysqlDatabaseName: process.env.MYSQL_DATABASE,
 
     slackBotOauthToken: process.env.SLACK_BOT_OAUTH_TOKEN,
   };

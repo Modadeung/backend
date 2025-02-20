@@ -3,6 +3,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { StoreKeyWordEntity } from './store-key-word.entity';
 import { UserStoreEntity } from './user-store-list.entity';
+import { StoreImageListEntity } from './store-image-list.entity';
 
 @Entity({ name: 'store' })
 export class StoreEntity extends BaseEntity {
@@ -26,13 +27,6 @@ export class StoreEntity extends BaseEntity {
   description: string;
 
   @Column({
-    name: 'image_url',
-    type: 'text',
-  })
-  @IsString()
-  imageUrl: string;
-
-  @Column({
     name: 'min_price',
     type: 'int',
   })
@@ -48,7 +42,7 @@ export class StoreEntity extends BaseEntity {
 
   @Column({
     name: 'scope',
-    type: 'float4',
+    type: 'float',
   })
   @IsNumber()
   scope: number;
@@ -67,4 +61,10 @@ export class StoreEntity extends BaseEntity {
 
   @OneToMany(() => UserStoreEntity, (userStore) => userStore.store)
   userStoreList: UserStoreEntity[];
+
+  @OneToMany(
+    () => StoreImageListEntity,
+    (storeImageList) => storeImageList.store,
+  )
+  storeImageList: StoreImageListEntity[];
 }
