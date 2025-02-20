@@ -10,9 +10,6 @@ export default () => {
     postgresDatabaseName: Joi.string().required(),
 
     slackBotOauthToken: Joi.string().required(),
-
-    openAPIUserName: Joi.string().required(),
-    openAPIPassWord: Joi.string().required(),
   });
 
   const config = {
@@ -23,9 +20,6 @@ export default () => {
     postgresDatabaseName: process.env.POSTGRES_DATABASE,
 
     slackBotOauthToken: process.env.SLACK_BOT_OAUTH_TOKEN,
-
-    openAPIUserName: process.env.OPEN_API_USERNAME,
-    openAPIPassWord: process.env.OPEN_API_PASSWORD,
   };
 
   const { error, value } = schema.validate(config);

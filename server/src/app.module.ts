@@ -6,6 +6,8 @@ import { DatabaseModule } from './database';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './common';
 import { CqrsModule } from '@nestjs/cqrs';
+import { UserModule } from './user/user.module';
+import { StoreModule } from './store/store.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { CqrsModule } from '@nestjs/cqrs';
     DatabaseModule,
     SettingModule,
     SlackModule,
+    UserModule,
+    StoreModule,
   ],
   controllers: [],
   providers: [

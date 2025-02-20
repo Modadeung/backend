@@ -1,9 +1,3 @@
-import {
-  IsPostgresDatabaseConfig,
-  ISlackConfig,
-  IOpenApiConfig,
-} from '../interfaces';
+import { IsPostgresDatabaseConfig, ISlackConfig } from '../interfaces';
 
-export type ConfigSchema = IsPostgresDatabaseConfig &
-  ISlackConfig &
-  IOpenApiConfig;
+export type ConfigSchema = IsPostgresDatabaseConfig & ISlackConfig;
