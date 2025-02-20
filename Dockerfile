@@ -21,7 +21,7 @@ WORKDIR /usr/src/modadug/app
 
 # 빌드한 dist, envs, node_modules 복사
 COPY --from=deps /usr/src/modadug/app/dist ./dist
-COPY --from=deps /usr/src/modadug/app/src/envs ./src/envs
+# COPY --from=deps /usr/src/modadug/app/src/envs ./src/envs
 COPY --from=deps /usr/src/modadug/app/node_modules ./node_modules
 
 EXPOSE 8080

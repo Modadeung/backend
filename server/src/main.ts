@@ -9,6 +9,13 @@ async function bootstrap() {
   const swaggerService = app.get(SwaggerService);
   swaggerService.createSwaggerDocument(app);
 
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+    allowedHeaders: 'Content-Type, Accept, Authorization',
+  });
+
   await app.listen(process.env.SERVER_PORT || 8080, '0.0.0.0');
 
   Logger.log(
